@@ -10,6 +10,6 @@ ROUTE_PREFIX_URL = '/'
 def createUrlData():
     return UrlController.createUrlData()
 
-@app.route(ROUTE_PREFIX_URL + "<string:converted_url>")
-def findUrl(converted_url):
-    return UrlController.findUrl(converted_url)
+@app.route(ROUTE_PREFIX_URL + "<string:shortened_key>")
+def findUrl(shortened_key):
+    return UrlController.findUrl(shortened_key)
