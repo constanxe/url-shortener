@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    URL: <input v-model="urlInput"> <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button><br>
-    <div v-if="shortenedUrl">Shortened URL: <a :href="shortenedUrl" target="_blank">{{shortenedUrl}}</a></div>
+    <h2>URL Shortener</h2>
+    URL: <input type="url" v-model="urlInput"> <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button><br>
+    <div v-if="shortenedUrl">
+      Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a> <button @click="copyShortenedUrl()">Copy</button>
+    </div>
     <div class="error">{{errorMessage}}</div>
   </div>
 </template>
@@ -41,6 +44,9 @@ export default {
         .then(response => this.shortenedUrl = 'http://localhost:3000/' + response.data.shortened_key)
         .catch(error => this.errorMessage = error.response.data.message || error.message);
     },
+    copyShortenedUrl() {
+      navigator.clipboard.writeText(this.shortenedUrl)
+    },
 
     isValidUrl(input) {
       try {
@@ -63,8 +69,11 @@ export default {
   margin-top: 60px;
 }
 
+input {
+  margin-bottom: 6px;
+}
+
 .error {
   color: red;
-  margin-top: 6px;
 }
 </style>
