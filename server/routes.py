@@ -10,6 +10,6 @@ ROUTE_PREFIX_URL = '/urls'
 def createUrl():
     return UrlController.create()
 
-@app.route(ROUTE_PREFIX_URL + '<string:url>')
-def findUrl(url):
-    return UrlController.find(url)
+@app.route(ROUTE_PREFIX_URL)
+def findUrl():
+    return UrlController.find()
