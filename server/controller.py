@@ -1,5 +1,5 @@
 from model import Url
-from flask import jsonify, request
+from flask import jsonify, redirect, request
 from settings import db
 
 import random
@@ -56,3 +56,10 @@ class UrlController():
     def addUrlDataToDatabase(self, urlData):
         db.session.add(urlData)
         db.session.commit()
+
+
+    def findUrl(self, converted_url):
+        urlData = Url.query.filter_by(converted_url=converted_url).first()
+        if urlData:
+            return redirect(urlData.url)
+        return "URL not found."
