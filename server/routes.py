@@ -6,10 +6,10 @@ UrlController = UrlController()
 
 ROUTE_PREFIX_URL = '/'
 
+@app.route(ROUTE_PREFIX_URL + "<string:shortened_key>")
+def redirectToUrl(shortened_key):
+    return UrlController.redirectToUrl(shortened_key)
+
 @app.route(ROUTE_PREFIX_URL, methods=['POST'])
 def createUrlData():
     return UrlController.createUrlData()
-
-@app.route(ROUTE_PREFIX_URL + "<string:shortened_key>")
-def findUrl(shortened_key):
-    return UrlController.findUrl(shortened_key)

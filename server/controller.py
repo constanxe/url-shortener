@@ -6,6 +6,11 @@ import random
 import string
 
 class UrlController():
+    def redirectToUrl(self, shortened_key):
+        urlData = Url.query.filter_by(shortened_key=shortened_key).first()
+        if urlData:
+            return redirect(urlData.url)
+        return "URL not found."
 
     def createUrlData(self):
         json = request.get_json()
@@ -56,10 +61,3 @@ class UrlController():
     def addUrlDataToDatabase(self, urlData):
         db.session.add(urlData)
         db.session.commit()
-
-
-    def findUrl(self, shortened_key):
-        urlData = Url.query.filter_by(shortened_key=shortened_key).first()
-        if urlData:
-            return redirect(urlData.url)
-        return "URL not found."
