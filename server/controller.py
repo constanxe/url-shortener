@@ -7,9 +7,9 @@ import string
 
 class UrlController():
     def redirectToUrl(self, shortened_key):
-        urlData = Url.query.filter_by(shortened_key=shortened_key).first()
-        if urlData:
-            return redirect(urlData.url)
+        url_data = Url.query.filter_by(shortened_key=shortened_key).first()
+        if url_data:
+            return redirect(url_data.url)
         return "URL not found."
 
     def createUrlData(self):
@@ -30,24 +30,24 @@ class UrlController():
             })
 
         # else, generate it and add to database
-        urlData = self.generateUrlData(url)
+        url_data = self.generateUrlData(url)
 
         try:
-            self.addUrlDataToDatabase(urlData)
+            self.addUrlDataToDatabase(url_data)
         except:
             try:    # retry at least once in case of generated same URL as any shortened_key in database
-                urlData = self.generateUrlData(url)
-                self.addUrlDataToDatabase(urlData)
+                url_data = self.generateUrlData(url)
+                self.addUrlDataToDatabase(url_data)
             except:
                 return jsonify({
                     "code": 500,
-                    "data": urlData.__repr__(),
+                    "data": url_data.__repr__(),
                     "message": "An error occurred creating the URL."
                 }), 500
 
         return jsonify({
             "code": 201,
-            "data": urlData.__repr__()
+            "data": url_data.__repr__()
         }), 201
 
 
@@ -58,6 +58,6 @@ class UrlController():
         shortened_key = ''.join(random.choice(string.ascii_lowercase) for i in range(3)) + ''.join(random.choice(string.digits) for i in range(3))
         return Url(url, shortened_key)
 
-    def addUrlDataToDatabase(self, urlData):
-        db.session.add(urlData)
+    def addUrlDataToDatabase(self, url_data):
+        db.session.add(url_data)
         db.session.commit()
