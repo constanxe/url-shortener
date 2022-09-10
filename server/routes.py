@@ -7,9 +7,9 @@ UrlController = UrlController()
 ROUTE_PREFIX_URL = '/urls'
 
 @app.route(ROUTE_PREFIX_URL, methods=['POST'])
-def createUrl():
+def createUrlData():
     return UrlController.create()
 
 @app.route(ROUTE_PREFIX_URL)
-def findUrl():
+def findUrlData():
     return UrlController.find()

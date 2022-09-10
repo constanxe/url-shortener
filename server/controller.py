@@ -16,10 +16,11 @@ class UrlController():
             }), 404
 
         url = json['url']
-
+        # if url already exists in database, directly return the converted_url linked to it
         if (self.getData(url)):
             return self.findResponse(self.getData(url))
 
+        # else, generate it and add to database
         converted_url = ''.join(random.choice(string.ascii_lowercase) for i in range(3)) + ''.join(random.choice(string.digits) for i in range(3))
         urlData = Url(url, converted_url)
 
@@ -30,7 +31,7 @@ class UrlController():
             return jsonify({
                 "code": 500,
                 "data": urlData.__repr__(),
-                "message": "An error occurred."
+                "message": "An error occurred creating the URL."
             }), 500
 
         return jsonify({
@@ -48,7 +49,6 @@ class UrlController():
 
         url = json['url']
         urlData = self.getData(url)
-
         return self.findResponse(urlData)
 
 
