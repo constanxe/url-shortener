@@ -7,7 +7,7 @@ import string
 
 class UrlController():
 
-    def create(self):
+    def createUrlData(self):
         json = request.get_json()
         if ('url' not in json):
             return jsonify({
@@ -16,19 +16,23 @@ class UrlController():
             }), 404
 
         url = json['url']
+
         # if url already exists in database, directly return the converted_url linked to it
-        if (self.getData(url)):
-            return self.findResponse(self.getData(url))
+        if (self.getUrlData(url)):
+            return jsonify({
+                "code": 200,
+                "data": self.getUrlData(url).__repr__()
+            })
 
         # else, generate it and add to database
         urlData = self.generateUrlData(url)
 
         try:
-            self.addDatabaseRow(urlData)
+            self.addUrlDataToDatabase(urlData)
         except:
             try:    # retry at least once in case of generated same URL as any converted_url in database
                 urlData = self.generateUrlData(url)
-                self.addDatabaseRow(urlData)
+                self.addUrlDataToDatabase(urlData)
             except:
                 return jsonify({
                     "code": 500,
@@ -41,37 +45,14 @@ class UrlController():
             "data": urlData.__repr__()
         }), 201
 
-    def find(self):
-        json = request.get_json()
-        if ('url' not in json):
-            return jsonify({
-                "code": 400,
-                "message": "Missing value for URL."
-            }), 404
 
-        url = json['url']
-        urlData = self.getData(url)
-        return self.findResponse(urlData)
-
-
-    def findResponse(self, urlData):
-        if (urlData):
-            return jsonify({
-                "code": 200,
-                "data": urlData.__repr__()
-            })
-        return jsonify({
-            "code": 404,
-            "message": "URL not found."
-        }), 404
-
-    def getData(self, url):
+    def getUrlData(self, url):
         return Url.query.filter_by(url=url).first()
 
     def generateUrlData(self, url):
         converted_url = ''.join(random.choice(string.ascii_lowercase) for i in range(3)) + ''.join(random.choice(string.digits) for i in range(3))
         return Url(url, converted_url)
 
-    def addDatabaseRow(self, urlData):
+    def addUrlDataToDatabase(self, urlData):
         db.session.add(urlData)
         db.session.commit()

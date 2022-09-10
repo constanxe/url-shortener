@@ -4,12 +4,8 @@ from controller import UrlController
 
 UrlController = UrlController()
 
-ROUTE_PREFIX_URL = '/urls'
+ROUTE_PREFIX_URL = '/'
 
 @app.route(ROUTE_PREFIX_URL, methods=['POST'])
 def createUrlData():
-    return UrlController.create()
-
-@app.route(ROUTE_PREFIX_URL)
-def findUrlData():
-    return UrlController.find()
+    return UrlController.createUrlData()
