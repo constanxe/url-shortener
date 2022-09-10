@@ -7,6 +7,10 @@ class UrlController():
 
     def create(self):
         url = request.get_json()['url']
+
+        if (self.getData(url)):
+            return self.findResponse(self.getData(url))
+
         converted_url = 'test'
         urlData = Url(url, converted_url)
 
@@ -17,8 +21,7 @@ class UrlController():
             return jsonify({
                 "code": 500,
                 "data": urlData.__repr__(),
-                "message": "An error occurred.",
-                "status": False
+                "message": "An error occurred."
             }), 500
 
         return jsonify({
@@ -29,6 +32,11 @@ class UrlController():
     def find(self):
         url = request.get_json()['url']
         urlData = self.getData(url)
+
+        return self.findResponse(urlData)
+
+
+    def findResponse(self, urlData):
         if (urlData):
             return jsonify({
                 "code": 200,
@@ -36,10 +44,8 @@ class UrlController():
             })
         return jsonify({
             "code": 404,
-            "message": "URL not found.",
-            "status": False
+            "message": "URL not found."
         }), 404
-
 
     def getData(self, url):
         return Url.query.filter_by(url=url).first()
