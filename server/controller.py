@@ -24,14 +24,11 @@ class UrlController():
         urlData = self.generateUrlData(url)
 
         try:
-            db.session.add(urlData)
-            db.session.commit()
+            self.addDatabaseRow(urlData)
         except:
             try:    # retry at least once in case of generated same URL as any converted_url in database
                 urlData = self.generateUrlData(url)
-
-                db.session.add(urlData)
-                db.session.commit()
+                self.addDatabaseRow(urlData)
             except:
                 return jsonify({
                     "code": 500,
@@ -74,3 +71,7 @@ class UrlController():
     def generateUrlData(self, url):
         converted_url = ''.join(random.choice(string.ascii_lowercase) for i in range(3)) + ''.join(random.choice(string.digits) for i in range(3))
         return Url(url, converted_url)
+
+    def addDatabaseRow(self, urlData):
+        db.session.add(urlData)
+        db.session.commit()
