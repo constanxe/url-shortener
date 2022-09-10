@@ -21,18 +21,23 @@ class UrlController():
             return self.findResponse(self.getData(url))
 
         # else, generate it and add to database
-        converted_url = ''.join(random.choice(string.ascii_lowercase) for i in range(3)) + ''.join(random.choice(string.digits) for i in range(3))
-        urlData = Url(url, converted_url)
+        urlData = self.generateUrlData(url)
 
         try:
             db.session.add(urlData)
             db.session.commit()
         except:
-            return jsonify({
-                "code": 500,
-                "data": urlData.__repr__(),
-                "message": "An error occurred creating the URL."
-            }), 500
+            try:    # retry at least once in case of generated same URL as any converted_url in database
+                urlData = self.generateUrlData(url)
+
+                db.session.add(urlData)
+                db.session.commit()
+            except:
+                return jsonify({
+                    "code": 500,
+                    "data": urlData.__repr__(),
+                    "message": "An error occurred creating the URL."
+                }), 500
 
         return jsonify({
             "code": 201,
@@ -65,3 +70,7 @@ class UrlController():
 
     def getData(self, url):
         return Url.query.filter_by(url=url).first()
+
+    def generateUrlData(self, url):
+        converted_url = ''.join(random.choice(string.ascii_lowercase) for i in range(3)) + ''.join(random.choice(string.digits) for i in range(3))
+        return Url(url, converted_url)
