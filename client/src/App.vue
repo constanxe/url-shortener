@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import HelloWorld from './components/HelloWorld.vue'
 
 export default {
@@ -21,7 +22,9 @@ export default {
   },
   methods: {
     generateShortenedUrl() {
-      this.shortenedUrl = 'http://hello.com'
+      axios.post('http://localhost:3000', {url: this.url})
+        .then(response => this.shortenedUrl = 'http://localhost:3000/' + response.data.shortened_key)
+        .catch(error => console.log(response.data.message || error));
     }
   }
 }
