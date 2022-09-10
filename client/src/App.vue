@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    URL: <input v-model="url"> <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button><br>
-    <div v-if="shortenedUrl" >Shortened URL: <a :href="shortenedUrl" target="_blank">{{shortenedUrl}}</a></div>
+    URL: <input v-model="urlInput"> <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button><br>
+    <div v-if="shortenedUrl">Shortened URL: <a :href="shortenedUrl" target="_blank">{{shortenedUrl}}</a></div>
     <div class="error">{{errorMessage}}</div>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      url: 'https://blog.gds-gov.tech/terragrunt-in-retro-i-would-have-done-thesefew-things-e5aaac451942',
+      urlInput: 'https://blog.gds-gov.tech/terragrunt-in-retro-i-would-have-done-thesefew-things-e5aaac451942',
       shortenedUrl: '',
       errorMessage: ''
     }
@@ -25,9 +25,16 @@ export default {
   methods: {
     generateShortenedUrl() {
       this.shortenedUrl = '';
+
+      const url = this.urlInput.trim();
+
+      if (!url) {
+        this.errorMessage = 'Please enter a URL to shorten';
+        return;
+      }
       this.errorMessage = '';
 
-      axios.post('http://localhost:3000', {url: this.url})
+      axios.post('http://localhost:3000', {url})
         .then(response => this.shortenedUrl = 'http://localhost:3000/' + response.data.shortened_key)
         .catch(error => this.errorMessage = error.response.data.message || error.message);
     }
@@ -47,5 +54,6 @@ export default {
 
 .error {
   color: red;
+  margin-top: 6px;
 }
 </style>
