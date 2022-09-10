@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    URL: <input v-model="url"> <button>Shorten</button><br>
+    URL: <input v-model="url"> <button @click="generateShortenedUrl()">Shorten</button><br>
+    Shortened URL: <a :href="shortenedUrl">{{shortenedUrl}}</a>
   </div>
 </template>
 
@@ -14,7 +15,13 @@ export default {
   },
   data() {
     return {
-      url: ''
+      url: 'https://blog.gds-gov.tech/terragrunt-in-retro-i-would-have-done-thesefew-things-e5aaac451942',
+      shortenedUrl: ''
+    }
+  },
+  methods: {
+    generateShortenedUrl() {
+      this.shortenedUrl = 'http://hello.com'
     }
   }
 }
