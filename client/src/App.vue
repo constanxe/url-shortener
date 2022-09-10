@@ -27,9 +27,12 @@ export default {
       this.shortenedUrl = '';
 
       const url = this.urlInput.trim();
-
       if (!url) {
-        this.errorMessage = 'Please enter a URL to shorten';
+        this.errorMessage = 'Please enter a URL';
+        return;
+      }
+      if (!this.isValidUrl(url)) {
+        this.errorMessage = 'Please enter a valid URL';
         return;
       }
       this.errorMessage = '';
@@ -37,6 +40,14 @@ export default {
       axios.post('http://localhost:3000', {url})
         .then(response => this.shortenedUrl = 'http://localhost:3000/' + response.data.shortened_key)
         .catch(error => this.errorMessage = error.response.data.message || error.message);
+    },
+
+    isValidUrl(input) {
+      try {
+      	return Boolean(new URL(input));
+      } catch (error) {
+      	return false;
+      }
     }
   }
 }
