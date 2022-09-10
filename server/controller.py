@@ -15,19 +15,13 @@ class UrlController():
     def createUrlData(self):
         json = request.get_json()
         if ('url' not in json):
-            return jsonify({
-                "code": 400,
-                "message": "Missing value for URL."
-            }), 404
+            return jsonify({"message": "Missing value for URL."}), 404
 
         url = json['url']
 
         # if url already exists in database, directly return the shortened_key linked to it
         if (self.getUrlData(url)):
-            return jsonify({
-                "code": 200,
-                "data": self.getUrlData(url).__repr__()
-            })
+            return jsonify({"shortened_key": self.getUrlData(url).shortened_key})
 
         # else, generate it and add to database
         url_data = self.generateUrlData(url)
@@ -40,15 +34,11 @@ class UrlController():
                 self.addUrlDataToDatabase(url_data)
             except:
                 return jsonify({
-                    "code": 500,
                     "data": url_data.__repr__(),
                     "message": "An error occurred creating the URL."
                 }), 500
 
-        return jsonify({
-            "code": 201,
-            "data": url_data.__repr__()
-        }), 201
+        return jsonify({"shortened_key": url_data.shortened_key}), 201
 
 
     def getUrlData(self, url):
