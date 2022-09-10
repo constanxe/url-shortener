@@ -8,7 +8,14 @@ import string
 class UrlController():
 
     def create(self):
-        url = request.get_json()['url']
+        json = request.get_json()
+        if ('url' not in json):
+            return jsonify({
+                "code": 400,
+                "message": "Missing value for URL."
+            }), 404
+
+        url = json['url']
 
         if (self.getData(url)):
             return self.findResponse(self.getData(url))
@@ -32,7 +39,14 @@ class UrlController():
         }), 201
 
     def find(self):
-        url = request.get_json()['url']
+        json = request.get_json()
+        if ('url' not in json):
+            return jsonify({
+                "code": 400,
+                "message": "Missing value for URL."
+            }), 404
+
+        url = json['url']
         urlData = self.getData(url)
 
         return self.findResponse(urlData)
