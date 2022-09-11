@@ -1,11 +1,19 @@
 <template>
   <div id="app">
     <h2>URL Shortener</h2>
-    URL: <input type="url" v-model="urlInput"> <button @click="pasteUrlInput()">Paste</button> <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button> <button @click="urlInput = ''">Clear</button>
-    <div v-if="shortenedUrl">
-      Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a> <button @click="copyShortenedUrl()">Copy</button> <button @click="shortenedUrl = ''">Clear</button>
+    Let's get started!<br>Insert your URL here.
+    <div><input type="url" v-model="urlInput"></div>
+    <div class="buttons">
+      <button @click="pasteUrlInput()">Paste</button>
+      <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button>
+      <button @click="urlInput = ''">Clear</button>
     </div>
-    <div class="error">{{errorMessage}}</div>
+    <div class="result">
+      <div v-if="shortenedUrl">
+        Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a> <button @click="copyShortenedUrl()">Copy</button> <button @click="shortenedUrl = ''">Clear</button>
+      </div>
+      <div class="error">{{errorMessage}}</div>
+    </div>
   </div>
 </template>
 
@@ -74,9 +82,18 @@ export default {
   margin-top: 60px;
 }
 
+input,
+.result {
+  margin-top: 10px;
+}
+
 input {
   margin-bottom: 6px;
   width: 60%;
+}
+
+.buttons > *:not(:last-child) {
+  margin-right: 3px;
 }
 
 .error {
