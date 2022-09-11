@@ -2,18 +2,13 @@
   <div id="app">
     <h2>URL Shortener</h2>
     <div class="label">Let's get started!<br>Insert your URL here.</div>
-    <input type="search" v-model="urlInput">
-    <div class="buttons">
-      <button @click="pasteUrlInput()">Paste</button>
-      <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button>
-    </div>
+    <input type="search" v-model="urlInput"> <button @click="pasteUrlInput()">Paste</button> <br>
+    <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button>
 
     <div class="result">
       <div v-if="shortenedUrl">
-        <div class="label">Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a></div>
-        <div class="buttons">
-          <button @click="copyShortenedUrl()">Copy</button>
-        </div>
+        Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a>
+        &nbsp;<button @click="copyShortenedUrl()">Copy</button>
       </div>
 
       <div class="error label" v-html="errorMessage"></div>
@@ -89,18 +84,16 @@ export default {
 input {
   width: 60%;
   max-width: 580px;
+}
+
+input,
+button {
   padding: 3px;
 }
 
 input,
-.label,
-.buttons {
+.label {
   margin-bottom: 6px;
-}
-
-// add space between buttons
-.buttons > *:not(:last-child) {
-  margin-right: 3px;
 }
 
 .result {
