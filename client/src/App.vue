@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <h2>URL Shortener</h2>
-    URL: <input type="url" v-model="urlInput"> <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button><br>
+    URL: <input type="url" v-model="urlInput"> <button @click="pasteUrlInput()">Paste</button> <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button> <button @click="urlInput = ''">Clear</button>
     <div v-if="shortenedUrl">
-      Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a> <button @click="copyShortenedUrl()">Copy</button>
+      Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a> <button @click="copyShortenedUrl()">Copy</button> <button @click="shortenedUrl = ''">Clear</button>
     </div>
     <div class="error">{{errorMessage}}</div>
   </div>
@@ -26,6 +26,14 @@ export default {
     }
   },
   methods: {
+    isValidUrl(input) {
+      try {
+      	return Boolean(new URL(input));
+      } catch (error) {
+      	return false;
+      }
+    },
+
     generateShortenedUrl() {
       this.shortenedUrl = '';
 
@@ -44,17 +52,14 @@ export default {
         .then(response => this.shortenedUrl = 'http://localhost:3000/' + response.data.shortened_key)
         .catch(error => this.errorMessage = error.response.data.message || error.message);
     },
-    copyShortenedUrl() {
-      navigator.clipboard.writeText(this.shortenedUrl)
+    pasteUrlInput() {
+      navigator.clipboard.readText()
+        .then(text => this.urlInput = text)
+        .catch(err => this.errorMessage = 'Failed to read clipboard contents due to ' + err);
     },
-
-    isValidUrl(input) {
-      try {
-      	return Boolean(new URL(input));
-      } catch (error) {
-      	return false;
-      }
-    }
+    copyShortenedUrl() {
+      navigator.clipboard.writeText(this.shortenedUrl);
+    },
   }
 }
 </script>
@@ -71,6 +76,7 @@ export default {
 
 input {
   margin-bottom: 6px;
+  width: 60%;
 }
 
 .error {
