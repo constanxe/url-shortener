@@ -62,7 +62,7 @@ export default {
 
       axios.post('http://localhost:3000', {url})
         .then(response => this.shortenedUrl = 'http://localhost:3000/' + response.data.shortened_key)
-        .catch(error => this.errorMessage = error.response.data.message || error.message);
+        .catch(error => this.errorMessage = error.response.data && error.response.data.message || error.message);
     },
     pasteUrlInput() {
       navigator.clipboard.readText()
