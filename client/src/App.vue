@@ -8,6 +8,7 @@
       <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button>
       <button @click="urlInput = ''">Clear</button>
     </div>
+
     <div class="result">
       <div v-if="shortenedUrl">
         <div class="label">Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a></div>
@@ -16,7 +17,9 @@
           <button @click="shortenedUrl = ''">Clear</button>
         </div>
       </div>
-      <div class="error" v-html="errorMessage"></div>
+
+      <div class="error label" v-html="errorMessage"></div>
+      <button v-if="errorMessage" @click="errorMessage = ''">Clear</button>
     </div>
   </div>
 </template>
@@ -83,11 +86,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 30vh;
 }
 
 input {
   width: 60%;
+  padding: 3px;
 }
 
 input,
