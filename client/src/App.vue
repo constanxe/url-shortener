@@ -91,6 +91,7 @@ export default {
 
 input {
   width: 60%;
+  max-width: 560px;
   padding: 3px;
 }
 
