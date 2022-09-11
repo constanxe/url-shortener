@@ -2,11 +2,10 @@
   <div id="app">
     <h2>URL Shortener</h2>
     <div class="label">Let's get started!<br>Insert your URL here.</div>
-    <input type="url" v-model="urlInput">
+    <input type="search" v-model="urlInput">
     <div class="buttons">
       <button @click="pasteUrlInput()">Paste</button>
       <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button>
-      <button @click="urlInput = ''">Clear</button>
     </div>
 
     <div class="result">
@@ -14,12 +13,10 @@
         <div class="label">Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a></div>
         <div class="buttons">
           <button @click="copyShortenedUrl()">Copy</button>
-          <button @click="shortenedUrl = ''">Clear</button>
         </div>
       </div>
 
       <div class="error label" v-html="errorMessage"></div>
-      <button v-if="errorMessage" @click="errorMessage = ''">Clear</button>
     </div>
   </div>
 </template>
@@ -91,7 +88,7 @@ export default {
 
 input {
   width: 60%;
-  max-width: 560px;
+  max-width: 580px;
   padding: 3px;
 }
 
