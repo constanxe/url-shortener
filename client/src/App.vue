@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <h2>URL Shortener</h2>
-    Let's get started!<br>Insert your URL here.
-    <div><input type="url" v-model="urlInput"></div>
+    <div class="label">Let's get started!<br>Insert your URL here.</div>
+    <input type="url" v-model="urlInput">
     <div class="buttons">
       <button @click="pasteUrlInput()">Paste</button>
       <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button>
@@ -10,9 +10,13 @@
     </div>
     <div class="result">
       <div v-if="shortenedUrl">
-        Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a> <button @click="copyShortenedUrl()">Copy</button> <button @click="shortenedUrl = ''">Clear</button>
+        <div class="label">Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a></div>
+        <div class="buttons">
+          <button @click="copyShortenedUrl()">Copy</button>
+          <button @click="shortenedUrl = ''">Clear</button>
+        </div>
       </div>
-      <div class="error">{{errorMessage}}</div>
+      <div class="error" v-html="errorMessage"></div>
     </div>
   </div>
 </template>
@@ -51,7 +55,7 @@ export default {
         return;
       }
       if (!this.isValidUrl(url)) {
-        this.errorMessage = 'Please enter a valid URL';
+        this.errorMessage = 'Please enter a <b>valid</b> URL';
         return;
       }
       this.errorMessage = '';
@@ -82,21 +86,26 @@ export default {
   margin-top: 60px;
 }
 
-input,
-.result {
-  margin-top: 10px;
-}
-
 input {
-  margin-bottom: 6px;
   width: 60%;
 }
 
+input,
+.label,
+.buttons {
+  margin-bottom: 6px;
+}
+
+// add space between buttons
 .buttons > *:not(:last-child) {
   margin-right: 3px;
 }
 
-.error {
-  color: red;
+.result {
+  margin-top: 30px;
+
+  .error {
+    color: red;
+  }
 }
 </style>
