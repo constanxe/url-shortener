@@ -2,9 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import ShortenedUrlResult from '@/components/ShortenedUrlResult.vue'
 
 Object.assign(navigator, {
-  clipboard: {
-    writeText: jest.fn(),
-  },
+  clipboard: {writeText: jest.fn()}
 })
 
 describe('ShortenedUrlResult.vue', () => {
@@ -23,13 +21,13 @@ describe('ShortenedUrlResult.vue', () => {
 
       expect(wrapper.find('a').exists()).toBeFalsy()
       expect(wrapper.text()).toEqual('')
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper).toMatchSnapshot()
     })
 
     it('renders props.shortenedUrl when passed', () => {
       expect(wrapper.find(`a[href="${shortenedUrl}"]`).exists()).toBeTruthy()
       expect(wrapper.text()).toMatch('Shortened URL: ' + shortenedUrl)
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper).toMatchSnapshot()
     })
   })
 

@@ -35,7 +35,7 @@ export default {
       urlInput: 'https://blog.gds-gov.tech/terragrunt-in-retro-i-would-have-done-thesefew-things-e5aaac451942',
       shortenedUrl: '',
       errorMessage: '',
-      theme: 'light'
+      theme: 'light',
     }
   },
   methods: {
@@ -103,24 +103,13 @@ body {
   color: var(--color-text);
   margin: 0;
 }
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   margin-top: 30vh;
-}
-
-input {
-  width: 60%;
-  max-width: 580px;
-  padding: 6px;
-}
-
-input,
-.label {
-  margin-bottom: 12px;
+  font-size: 20px;
 }
 
 .result {
@@ -131,10 +120,27 @@ input,
   }
 }
 
+/* elements */
+input {
+  outline: none;
+  width: 60%;
+  max-width: 580px;
+  padding: 6px;
+}
+input,
+.label {
+  margin-bottom: 12px;
+}
+input,
+button {
+  font-size: 16px;
+}
+
 button {
   border: none;
-  color: #fff;
+  color: white;
   padding: 8px 12px;
+  margin-bottom: 6px;
   border-radius: 18px;
   background-color: rgb(243, 189, 88);
 
@@ -142,7 +148,6 @@ button {
     cursor: pointer;
   }
 }
-
 .btn__theme {
   all: unset;
 }

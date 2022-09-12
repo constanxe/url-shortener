@@ -9,7 +9,7 @@
 export default {
   name: 'ShortenedUrlResult',
   props: {
-    shortenedUrl: String
+    shortenedUrl: String,
   },
   methods: {
     copyShortenedUrl() {
