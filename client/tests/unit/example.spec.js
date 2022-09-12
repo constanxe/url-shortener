@@ -3,7 +3,7 @@ import ShortenedUrlResult from '@/components/ShortenedUrlResult.vue'
 
 Object.assign(navigator, {
   clipboard: {
-    writeText: () => {},
+    writeText: jest.fn(),
   },
 })
 
@@ -30,8 +30,6 @@ describe('ShortenedUrlResult.vue', () => {
   })
 
   it('copies props.shortenedUrl when button is clicked', () => {
-    jest.spyOn(navigator.clipboard, 'writeText')
-
     wrapper.find('button').trigger('click')
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(shortenedUrl)
   })
