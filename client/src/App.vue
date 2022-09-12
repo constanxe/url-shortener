@@ -106,16 +106,12 @@ body {
 input {
   width: 60%;
   max-width: 580px;
-}
-
-input,
-button {
-  padding: 3px;
+  padding: 6px;
 }
 
 input,
 .label {
-  margin-bottom: 6px;
+  margin-bottom: 12px;
 }
 
 .result {
@@ -126,8 +122,16 @@ input,
   }
 }
 
-button:hover {
-  cursor: pointer;
+button {
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 18px;
+  background-color: rgb(243, 189, 88);
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .btn__theme {
