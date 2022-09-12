@@ -6,11 +6,7 @@
     <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button>
 
     <div class="result">
-      <div v-if="shortenedUrl">
-        Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a>
-        &nbsp;<button @click="copyShortenedUrl()">Copy</button>
-      </div>
-
+      <ShortenedUrlResult :shortenedUrl="shortenedUrl"/>
       <div class="error label" v-html="errorMessage"></div>
     </div>
   </div>
@@ -18,12 +14,12 @@
 
 <script>
 import axios from 'axios';
-import HelloWorld from './components/HelloWorld.vue'
+import ShortenedUrlResult from './components/ShortenedUrlResult.vue'
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld
+    ShortenedUrlResult
   },
   data() {
     return {
@@ -63,9 +59,6 @@ export default {
       navigator.clipboard.readText()
         .then(text => this.urlInput = text)
         .catch(err => this.errorMessage = 'Failed to read clipboard contents due to ' + err);
-    },
-    copyShortenedUrl() {
-      navigator.clipboard.writeText(this.shortenedUrl);
     },
   }
 }

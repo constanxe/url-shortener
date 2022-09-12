@@ -1,12 +1,12 @@
 import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+import ShortenedUrlResult from '@/components/ShortenedUrlResult.vue'
 
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      propsData: { msg }
+describe('ShortenedUrlResult.vue', () => {
+  it('renders props.shortenedUrl when passed', () => {
+    const shortenedUrl = 'url'
+    const wrapper = shallowMount(ShortenedUrlResult, {
+      propsData: { shortenedUrl }
     })
-    expect(wrapper.text()).toMatch(msg)
+    expect(wrapper.text()).toMatch(shortenedUrl)
   })
 })
