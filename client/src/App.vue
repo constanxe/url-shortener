@@ -16,6 +16,8 @@
 import axios from 'axios';
 import ShortenedUrlResult from './components/ShortenedUrlResult.vue'
 
+const serverUrl = 'http://localhost:3000';
+
 export default {
   name: 'App',
   components: {
@@ -51,8 +53,8 @@ export default {
       }
       this.errorMessage = '';
 
-      axios.post('http://localhost:3000', {url})
-        .then(response => this.shortenedUrl = 'http://localhost:3000/' + response.data.shortened_key)
+      axios.post(serverUrl, {url})
+        .then(response => this.shortenedUrl = serverUrl + response.data.shortened_key)
         .catch(error => this.errorMessage = error.response.data && error.response.data.message || error.message);
     },
     pasteUrlInput() {

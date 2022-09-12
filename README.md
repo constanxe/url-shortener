@@ -21,9 +21,11 @@ pip install -r requirements.txt
 python app.py
 ```
 
+local app will be available on http://localhost:3000/ or otherwise as provided
+
 
 ### client
-:warning: ensure that the server app is running before doing either of the following options:
+:warning: <b>server app has to be running on port 3000 for the URL shortening service</b>
 
 access deployed app on https://urlshortener1.netlify.app/
 
@@ -41,12 +43,12 @@ npm install
 npm run serve
 ```
 
-3. access local app on http://localhost:8080/ or otherwise as provided
+access local app on http://localhost:8080/ or otherwise as provided
 
 
 ## tests
 
-run the following in the `client` folder
+run this in the `client` folder
 ```
 npm run test:unit
 ```
