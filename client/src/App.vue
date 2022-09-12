@@ -1,7 +1,14 @@
 <template>
   <div id="app">
-    <h2>URL Shortener<button class="btn__theme" @click="toggleTheme" title="Toggle theme" aria-label="Toggle theme">{{theme == 'light' ? '🌙' : '☀️'}}</button></h2>
+    <h2>
+      URL Shortener
+      <button class="btn__theme" @click="toggleTheme" :title="`Change theme to ${getOtherTheme()} mode`" :aria-label="`Change theme to ${getOtherTheme()} mode`">
+        {{theme == 'light' ? '🌙' : '☀️'}}
+      </button>
+    </h2>
+
     <div class="label">Let's get started!<br>Insert your URL here.</div>
+
     <input type="search" v-model="urlInput" @keydown.enter="generateShortenedUrl()"> <button @click="pasteUrlInput()">Paste</button> <br>
     <button @click="generateShortenedUrl()">Shorten</button>
 
@@ -39,7 +46,6 @@ export default {
       	return false;
       }
     },
-
     generateShortenedUrl() {
       this.shortenedUrl = '';
 
@@ -67,10 +73,13 @@ export default {
 
     // ref: https://dev.to/lindaojo/dark-mode-using-css-variables-vue-js-37il
     toggleTheme() {
-      this.theme = this.theme == 'light' ? 'dark' : 'light'; //toggles theme value
+      this.theme = this.getOtherTheme(); //toggles theme value
       document.documentElement.setAttribute('data-theme', this.theme); // sets the data-theme attribute
       localStorage.setItem('theme', this.theme); // stores theme value on local storage
-    }
+    },
+    getOtherTheme() {
+      return this.theme == 'light' ? 'dark' : 'light';
+    },
   }
 }
 </script>
