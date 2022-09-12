@@ -1,4 +1,4 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import ShortenedUrlResult from '@/components/ShortenedUrlResult.vue'
 
 Object.assign(navigator, {
@@ -17,16 +17,16 @@ describe('ShortenedUrlResult.vue', () => {
     }
   ))
 
-  it('renders props.shortenedUrl when passed', () => {
-    expect(wrapper.find(`a[href="${shortenedUrl}"]`).exists()).toBeTruthy()
-    expect(wrapper.text()).toMatch('Shortened URL: ' + shortenedUrl)
-  })
-
   it('does not show content when props.shortenedUrl is empty', () => {
     const wrapper = shallowMount(ShortenedUrlResult, {
       propsData: {shortenedUrl: ''}
     })
+    expect(wrapper.find('a').exists()).toBeFalsy()
     expect(wrapper.text()).toEqual('')
+  })
+  it('renders props.shortenedUrl when passed', () => {
+    expect(wrapper.find(`a[href="${shortenedUrl}"]`).exists()).toBeTruthy()
+    expect(wrapper.text()).toMatch('Shortened URL: ' + shortenedUrl)
   })
 
   it('copies props.shortenedUrl when button is clicked', () => {
