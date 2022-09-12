@@ -1,6 +1,12 @@
 import { mount, shallowMount } from '@vue/test-utils'
 import ShortenedUrlResult from '@/components/ShortenedUrlResult.vue'
 
+Object.assign(navigator, {
+  clipboard: {
+    writeText: () => {},
+  },
+})
+
 describe('ShortenedUrlResult.vue', () => {
   let wrapper
   let shortenedUrl = 'url'
@@ -23,4 +29,10 @@ describe('ShortenedUrlResult.vue', () => {
     expect(wrapper.text()).toEqual('')
   })
 
+  it('copies props.shortenedUrl when button is clicked', () => {
+    jest.spyOn(navigator.clipboard, 'writeText')
+
+    wrapper.find('button').trigger('click')
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(shortenedUrl)
+  })
 })
