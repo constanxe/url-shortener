@@ -2,8 +2,8 @@
   <div id="app">
     <h2>URL Shortener</h2>
     <div class="label">Let's get started!<br>Insert your URL here.</div>
-    <input type="search" v-model="urlInput"> <button @click="pasteUrlInput()">Paste</button> <br>
-    <button @click="generateShortenedUrl()" @keydown.enter="generateShortenedUrl()">Shorten</button>
+    <input type="search" v-model="urlInput" @keydown.enter="generateShortenedUrl()"> <button @click="pasteUrlInput()">Paste</button> <br>
+    <button @click="generateShortenedUrl()">Shorten</button>
 
     <div class="result">
       <ShortenedUrlResult :shortenedUrl="shortenedUrl"/>
@@ -46,7 +46,7 @@ export default {
         return;
       }
       if (!this.isValidUrl(url)) {
-        this.errorMessage = 'Please enter a <b>valid</b> URL';
+        this.errorMessage = 'Please enter a <b>valid</b> URL with http(s) in front';
         return;
       }
       this.errorMessage = '';
