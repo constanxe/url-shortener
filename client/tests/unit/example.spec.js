@@ -9,7 +9,7 @@ Object.assign(navigator, {
 
 describe('ShortenedUrlResult.vue', () => {
   let wrapper
-  let shortenedUrl = 'url'
+  let shortenedUrl = 'http://localhost:3000/qwe123'
 
   beforeEach(() => wrapper = shallowMount(ShortenedUrlResult, {
     propsData: {shortenedUrl}
@@ -23,11 +23,13 @@ describe('ShortenedUrlResult.vue', () => {
 
       expect(wrapper.find('a').exists()).toBeFalsy()
       expect(wrapper.text()).toEqual('')
+      expect(wrapper).toMatchSnapshot();
     })
 
     it('renders props.shortenedUrl when passed', () => {
       expect(wrapper.find(`a[href="${shortenedUrl}"]`).exists()).toBeTruthy()
       expect(wrapper.text()).toMatch('Shortened URL: ' + shortenedUrl)
+      expect(wrapper).toMatchSnapshot();
     })
   })
 
