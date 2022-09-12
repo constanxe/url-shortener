@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h2>URL Shortener</h2>
+    <h2>URL Shortener<button class="btn__theme" @click="toggleTheme" title="Toggle theme" aria-label="Toggle theme">{{theme == 'light' ? '🌙' : '☀️'}}</button></h2>
     <div class="label">Let's get started!<br>Insert your URL here.</div>
     <input type="search" v-model="urlInput" @keydown.enter="generateShortenedUrl()"> <button @click="pasteUrlInput()">Paste</button> <br>
     <button @click="generateShortenedUrl()">Shorten</button>
@@ -27,7 +27,8 @@ export default {
     return {
       urlInput: 'https://blog.gds-gov.tech/terragrunt-in-retro-i-would-have-done-thesefew-things-e5aaac451942',
       shortenedUrl: '',
-      errorMessage: ''
+      errorMessage: '',
+      theme: 'light'
     }
   },
   methods: {
@@ -57,22 +58,48 @@ export default {
         .then(response => this.shortenedUrl = serverUrl + response.data.shortened_key)
         .catch(error => this.errorMessage = error.response.data && error.response.data.message || error.message);
     },
+
     pasteUrlInput() {
       navigator.clipboard.readText()
         .then(text => this.urlInput = text)
         .catch(err => this.errorMessage = 'Failed to read clipboard contents due to ' + err);
     },
+
+    // ref: https://dev.to/lindaojo/dark-mode-using-css-variables-vue-js-37il
+    toggleTheme() {
+      this.theme = this.theme == 'light' ? 'dark' : 'light'; //toggles theme value
+      document.documentElement.setAttribute('data-theme', this.theme); // sets the data-theme attribute
+      localStorage.setItem('theme', this.theme); // stores theme value on local storage
+    }
   }
 }
 </script>
 
 <style lang="scss">
+:root, [data-theme=light] {
+  --color-text: black;
+  --color-default: white;
+}
+[data-theme=dark] {
+  --color-text: white;
+  --color-default: #2a313a;
+
+  a {
+    color: var(--color-text);
+  }
+}
+
+body {
+  background-color: var(--color-default);
+  color: var(--color-text);
+  margin: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   margin-top: 30vh;
 }
 
@@ -97,5 +124,13 @@ input,
   .error {
     color: red;
   }
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.btn__theme {
+  all: unset;
 }
 </style>
