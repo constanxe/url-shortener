@@ -2,7 +2,7 @@
   <div id="app">
     <h2>
       URL Shortener
-      <button class="btn__theme" @click="toggleTheme" :title="`Change theme to ${getOtherTheme()} mode`" :aria-label="`Change theme to ${getOtherTheme()} mode`">
+      <button class="theme" @click="toggleTheme" :title="`Change theme to ${getOtherTheme()} mode`" :aria-label="`Change theme to ${getOtherTheme()} mode`">
         {{theme == 'light' ? '🌙' : '☀️'}}
       </button>
     </h2>
@@ -138,11 +138,6 @@ input {
   width: 60%;
   max-width: 580px;
   padding: 6px;
-
-  // hide magnifying glass icon
-  &[type=search] {
-    -webkit-appearance: textfield;
-  }
 }
 input,
 .label {
@@ -164,8 +159,9 @@ button {
   &:hover {
     cursor: pointer;
   }
-}
-.btn__theme {
-  all: unset;
+
+  &.theme {
+    all: unset;
+  }
 }
 </style>
