@@ -83,15 +83,21 @@ export default {
         .catch(err => this.message = 'Failed to read clipboard contents due to ' + err);
     },
 
-    // ref: https://dev.to/lindaojo/dark-mode-using-css-variables-vue-js-37il
-    toggleTheme() {
-      this.theme = this.getOtherTheme(); //toggles theme value
-      document.documentElement.setAttribute('data-theme', this.theme); // sets the data-theme attribute
-      localStorage.setItem('theme', this.theme); // stores theme value on local storage
-    },
     getOtherTheme() {
       return this.theme == 'light' ? 'dark' : 'light';
     },
+    setTheme() {
+      document.documentElement.setAttribute('data-theme', this.theme);
+    },
+    toggleTheme() { // ref: https://dev.to/lindaojo/dark-mode-using-css-variables-vue-js-37il
+      this.theme = this.getOtherTheme(); //toggles theme value
+      this.setTheme(); // sets the data-theme attribute
+      localStorage.setItem('theme', this.theme); // stores theme value on local storage
+    },
+  },
+  mounted() {
+    this.theme = localStorage.getItem('theme');
+    document.documentElement.setAttribute('data-theme', this.theme)
   }
 }
 </script>
