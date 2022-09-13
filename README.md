@@ -23,9 +23,11 @@ python app.py
 
 local app will be available on http://localhost:3000/ or otherwise as provided
 
+:warning: <b>server app assumes database credentials of `root` username, empty password, `3306` port</b>
+
 
 ### client
-:warning: <b>server app has to be running on port 3000 for the URL shortening service</b>
+:warning: <b>server app has to be running on http://localhost:3000/ for the URL shortening service</b>
 
 access deployed app on https://urlshortener1.netlify.app/
 
