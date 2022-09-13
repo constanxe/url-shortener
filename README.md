@@ -47,7 +47,7 @@ access local app on http://localhost:8080/ or otherwise as provided
 
 ## tests
 
-run this in the `client` folder
+run this in the `client` folder for the unit tests [here](client/tests/unit/example.spec.js)
 ```
 npm run test:unit
 ```

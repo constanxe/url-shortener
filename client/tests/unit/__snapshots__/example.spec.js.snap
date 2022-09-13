@@ -3,7 +3,6 @@
 exports[`ShortenedUrlResult.vue displays content if props.shortenedUrl passed does not show content when props.shortenedUrl empty 1`] = ``;
 
 exports[`ShortenedUrlResult.vue displays content if props.shortenedUrl passed renders props.shortenedUrl when passed 1`] = `
-<div>
-  Shortened URL: <a target="_blank" href="http://localhost:3000/qwe123">http://localhost:3000/qwe123</a>
+<div><b>Shortened URL: <a target="_blank" href="http://localhost:3000/qwe123">http://localhost:3000/qwe123</a></b>
   &nbsp;<button>Copy</button></div>
 `;
