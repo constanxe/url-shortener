@@ -14,7 +14,7 @@
 
     <div class="result">
       <ShortenedUrlResult :shortenedUrl="shortenedUrl"/>
-      <div class="label" :class="{error: !isLoading}" v-html="errorMessage"></div>
+      <div class="label" :class="{error: !isLoading}" v-html="message"></div>
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
     return {
       urlInput: 'https://blog.gds-gov.tech/terragrunt-in-retro-i-would-have-done-thesefew-things-e5aaac451942',
       shortenedUrl: '',
-      errorMessage: '',
+      message: '',
       isLoading: false,
       theme: 'light',
     }
@@ -52,26 +52,26 @@ export default {
 
       const url = this.urlInput.trim();
       if (!url) {
-        this.errorMessage = 'Please enter a URL.';
+        this.message = 'Please enter a URL.';
         return;
       }
       if (!this.isValidUrl(url)) {
-        this.errorMessage = 'Please enter a <b>valid</b> URL with http(s) in front.';
+        this.message = 'Please enter a <b>valid</b> URL with http(s) in front.';
         return;
       }
 
-      this.errorMessage = 'Loading...';
+      this.message = 'Loading...';
       this.isLoading = true;
 
       axios.post(serverUrl, {url})
         .then(response => {
-          this.errorMessage = '';
+          this.message = '';
           this.isLoading = false;
           this.shortenedUrl = serverUrl + response.data.shortened_key;
         })
         .catch(error => {
           this.isLoading = false;
-          this.errorMessage = 'Failed to shorten URL due to ' + (error.response
+          this.message = 'Failed to shorten URL due to ' + (error.response
             ? error.response.data.message // server is running -> can return response
             : error.message + `<br><small>Please ensure server is running at <a href="${serverUrl}">${serverUrl}</a></small>`)
         });
@@ -80,7 +80,7 @@ export default {
     pasteUrlInput() {
       navigator.clipboard.readText()
         .then(text => this.urlInput = text)
-        .catch(err => this.errorMessage = 'Failed to read clipboard contents due to ' + err);
+        .catch(err => this.message = 'Failed to read clipboard contents due to ' + err);
     },
 
     // ref: https://dev.to/lindaojo/dark-mode-using-css-variables-vue-js-37il
