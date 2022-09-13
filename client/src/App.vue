@@ -23,7 +23,7 @@
 import axios from 'axios';
 import ShortenedUrlResult from './components/ShortenedUrlResult.vue'
 
-const serverUrl = 'http://localhost:3000';
+const serverUrl = 'http://localhost:3000/';
 
 export default {
   name: 'App',
@@ -51,18 +51,21 @@ export default {
 
       const url = this.urlInput.trim();
       if (!url) {
-        this.errorMessage = 'Please enter a URL';
+        this.errorMessage = 'Please enter a URL.';
         return;
       }
       if (!this.isValidUrl(url)) {
-        this.errorMessage = 'Please enter a <b>valid</b> URL with http(s) in front';
+        this.errorMessage = 'Please enter a <b>valid</b> URL with http(s) in front.';
         return;
       }
       this.errorMessage = '';
 
       axios.post(serverUrl, {url})
         .then(response => this.shortenedUrl = serverUrl + response.data.shortened_key)
-        .catch(error => this.errorMessage = error.response.data && error.response.data.message || error.message);
+        .catch(error => this.errorMessage = 'Failed to shorten URL due to ' + (error.response
+          ? error.response.data.message // server is running -> can return response
+          : error.message + `<br><small>Please ensure server is running at <a href="${serverUrl}">${serverUrl}</a></small>`)
+        );
     },
 
     pasteUrlInput() {
@@ -94,7 +97,7 @@ export default {
   --color-default: #2a313a;
 
   a {
-    color: var(--color-text);
+    color: inherit;
   }
 }
 
@@ -126,6 +129,11 @@ input {
   width: 60%;
   max-width: 580px;
   padding: 6px;
+
+  // hide magnifying glass icon
+  &[type=search] {
+    -webkit-appearance: textfield;
+  }
 }
 input,
 .label {

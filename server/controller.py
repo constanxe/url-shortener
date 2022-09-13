@@ -35,7 +35,7 @@ class UrlController():
             except:
                 return jsonify({
                     "data": url_data.__repr__(),
-                    "message": "An error occurred creating the URL."
+                    "message": "Internal server error"
                 }), 500
 
         return jsonify({"shortened_key": url_data.shortened_key}), 201
