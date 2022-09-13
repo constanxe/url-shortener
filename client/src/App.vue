@@ -58,10 +58,13 @@ export default {
         this.errorMessage = 'Please enter a <b>valid</b> URL with http(s) in front.';
         return;
       }
-      this.errorMessage = '';
+      this.errorMessage = 'Loading...';
 
       axios.post(serverUrl, {url})
-        .then(response => this.shortenedUrl = serverUrl + response.data.shortened_key)
+        .then(response => {
+          this.errorMessage = '';
+          this.shortenedUrl = serverUrl + response.data.shortened_key;
+        })
         .catch(error => this.errorMessage = 'Failed to shorten URL due to ' + (error.response
           ? error.response.data.message // server is running -> can return response
           : error.message + `<br><small>Please ensure server is running at <a href="${serverUrl}">${serverUrl}</a></small>`)
