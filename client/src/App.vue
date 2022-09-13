@@ -97,7 +97,8 @@ export default {
 </script>
 
 <style lang="scss">
-:root, [data-theme=light] {
+:root,
+[data-theme=light] {
   --color-text: black;
   --color-default: white;
 }
@@ -115,12 +116,13 @@ body {
   color: var(--color-text);
   margin: 0;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 30vh;
+  margin-top: 26vh;
   font-size: 20px;
 }
 
@@ -140,6 +142,7 @@ input {
   padding: 6px;
   margin-top: 12px;
 }
+
 input,
 button {
   font-size: 16px;
