@@ -1,6 +1,6 @@
 <template>
   <div v-if="shortenedUrl">
-    Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a>
+    <b>Shortened URL: <a target="_blank" :href="shortenedUrl">{{shortenedUrl}}</a></b>
     &nbsp;<button @click="copyShortenedUrl()">Copy</button>
   </div>
 </template>

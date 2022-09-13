@@ -138,10 +138,7 @@ input {
   width: 60%;
   max-width: 580px;
   padding: 6px;
-}
-input,
-.label {
-  margin-bottom: 12px;
+  margin-top: 12px;
 }
 input,
 button {
@@ -152,7 +149,7 @@ button {
   border: none;
   color: white;
   padding: 8px 12px;
-  margin-bottom: 6px;
+  margin-top: 8px;
   border-radius: 18px;
   background-color: rgb(243, 189, 88);
 
