@@ -13,27 +13,28 @@ describe('ShortenedUrlResult.vue', () => {
     propsData: {shortenedUrl}
   }))
 
+  it('copies props.shortenedUrl when button clicked', () => {
+    wrapper.find('button').trigger('click')
+
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(shortenedUrl)
+  })
+
   describe('displays content if props.shortenedUrl passed', () => {
-    it('does not show content when props.shortenedUrl empty', () => {
-      const wrapper = shallowMount(ShortenedUrlResult, {
-        propsData: {shortenedUrl: ''}
-      })
-
-      expect(wrapper.find('a').exists()).toBeFalsy()
-      expect(wrapper.text()).toEqual('')
-      expect(wrapper).toMatchSnapshot()
-    })
-
     it('renders props.shortenedUrl when passed', () => {
       expect(wrapper.find(`a[href="${shortenedUrl}"]`).exists()).toBeTruthy()
       expect(wrapper.text()).toMatch('Shortened URL: ' + shortenedUrl)
       expect(wrapper).toMatchSnapshot()
     })
-  })
 
-  it('copies props.shortenedUrl when button clicked', () => {
-    wrapper.find('button').trigger('click')
+    it('does not show content when props.shortenedUrl empty', () => {
+      shortenedUrl = ''
+      wrapper = shallowMount(ShortenedUrlResult, {
+        propsData: {shortenedUrl}
+      })
 
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(shortenedUrl)
+      expect(wrapper.find('a').exists()).toBeFalsy()
+      expect(wrapper.text()).toEqual(shortenedUrl)
+      expect(wrapper).toMatchSnapshot()
+    })
   })
 })
