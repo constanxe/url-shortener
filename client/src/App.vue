@@ -73,7 +73,8 @@ export default {
           this.isLoading = false;
           this.message = 'Failed to shorten URL due to ' + (error.response
             ? error.response.data.message // server is running -> can return response
-            : error.message + `<br><small>Please ensure server is running at <a href="${serverUrl}">${serverUrl}</a></small>`)
+            : error.message + `<br><small>Please ensure server is running at <a href="${serverUrl}">${serverUrl}</a></small>`
+          )
         });
     },
 
