@@ -9,9 +9,11 @@ describe('ShortenedUrlResult.vue', () => {
   let wrapper
   let shortenedUrl = 'http://localhost:3000/qwe123'
 
-  beforeEach(() => wrapper = shallowMount(ShortenedUrlResult, {
+  const getWrapper = (shortenedUrl) => shallowMount(ShortenedUrlResult, {
     propsData: {shortenedUrl}
-  }))
+  })
+
+  beforeEach(() => wrapper = getWrapper(shortenedUrl))
 
   it('copies props.shortenedUrl when button clicked', () => {
     wrapper.find('button').trigger('click')
@@ -20,21 +22,21 @@ describe('ShortenedUrlResult.vue', () => {
   })
 
   describe('displays content if props.shortenedUrl passed', () => {
+    const wrapperMatchesSnapshot = (wrapper) => expect(wrapper).toMatchSnapshot()
+
     it('renders props.shortenedUrl when passed', () => {
       expect(wrapper.find(`a[href="${shortenedUrl}"]`).exists()).toBeTruthy()
       expect(wrapper.text()).toMatch('Shortened URL: ' + shortenedUrl)
-      expect(wrapper).toMatchSnapshot()
+      wrapperMatchesSnapshot(wrapper)
     })
 
     it('does not show content when props.shortenedUrl empty', () => {
       shortenedUrl = ''
-      wrapper = shallowMount(ShortenedUrlResult, {
-        propsData: {shortenedUrl}
-      })
+      wrapper = getWrapper(shortenedUrl)
 
       expect(wrapper.find('a').exists()).toBeFalsy()
       expect(wrapper.text()).toEqual(shortenedUrl)
-      expect(wrapper).toMatchSnapshot()
+      wrapperMatchesSnapshot(wrapper)
     })
   })
 })
